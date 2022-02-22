@@ -2,4 +2,16 @@
 {% block content  %}
 <h2>i am home with block </h2>
 
+<div>
+    <div>
+        {% for room in rooms %}
+        <div>
+            <h5>{{room.id}} -- {{room.name}}</h5>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
 {% endblock %}
