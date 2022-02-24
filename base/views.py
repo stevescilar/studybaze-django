@@ -1,7 +1,7 @@
 from multiprocessing import context
 from this import d
 from django.shortcuts import render,redirect
-from .models import  Room
+from .models import  Room, Topic
 from .forms import RoomForm
  
 
@@ -15,8 +15,11 @@ from .forms import RoomForm
 def home(request):
     # querry set
     rooms = Room.objects.all()
+
+    topics = Topic.objects.all()
+
     # create a context dictionary
-    context = {'rooms':rooms}
+    context = {'rooms':rooms,'topics':topics}
     return render(request,'base/home.html',context) 
 
 def room(request,pk):
