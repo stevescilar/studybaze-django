@@ -18,6 +18,9 @@ class Room(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True) #value doesnt change
 
+
+    class Meta:
+        ordering =['-updated','-created'] #reverse ordering
     def __str__(self):
         return self.name
 
