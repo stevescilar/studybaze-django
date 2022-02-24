@@ -21,6 +21,10 @@ from .forms import RoomForm
 # user login 
 def loginPage(request):
 
+    # denie relogin
+    if request.user.is_authenticated:
+        return redirect('home')
+    # user login
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -87,7 +91,7 @@ def updateRoom(request,pk):
     form = RoomForm(instance=room)
     
     if request.user != room.host:
-        return HttpResponse('You are not allowes here!')
+        return HttpResponse('You are not allowed here!')
 
     if request.method == 'POST':
         form = RoomForm(request.POST, instance=room)
@@ -105,7 +109,7 @@ def deleteRoom(request,pk):
     room = Room.objects.get(id=pk)
 
     if request.user != room.host:
-        return HttpResponse('You are not allowes here!')
+        return HttpResponse('You are not allowed here!')
 
 
     if request.method == 'POST':
