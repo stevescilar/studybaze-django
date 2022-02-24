@@ -86,7 +86,7 @@ def updateRoom(request,pk):
     room = Room.objects.get(id=pk)
     form = RoomForm(instance=room)
     
-    if request.user != room.user:
+    if request.user != room.host:
         return HttpResponse('You are not allowes here!')
 
     if request.method == 'POST':
@@ -103,6 +103,11 @@ def updateRoom(request,pk):
 @login_required(login_url='login')
 def deleteRoom(request,pk):
     room = Room.objects.get(id=pk)
+
+    if request.user != room.host:
+        return HttpResponse('You are not allowes here!')
+
+
     if request.method == 'POST':
         room.delete()
         return redirect('home')
