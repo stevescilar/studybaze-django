@@ -1,8 +1,10 @@
 # from multiprocessing import context
+from operator import is_not
 from django.db.models import Q
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth import authenticate, login,logout
 from .models import  Room, Topic
 from .forms import RoomForm
  
@@ -12,7 +14,9 @@ from .forms import RoomForm
 #     {'id':2,'name':'Make it Happen'},
 #     {'id':3,'name':'Attitude'},
 # ]
+#
 
+# user login 
 def loginPage(request):
 
     if request.method == 'POST':
@@ -23,8 +27,21 @@ def loginPage(request):
             user = User.objects.get(username=username)
         except:
             messages.error(request,'User doesnt exist')
+        user = authenticate(request,username=username, password=password)
+
+        if user is not None:
+            login(request,user)
+            return redirect('home')
+        else:
+            messages.error(request,'Username or password does not exist')
+
+        
     context= {}
     return render(request,'base/login_register.html', context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('home')
 
 def home(request):
     # querry set
