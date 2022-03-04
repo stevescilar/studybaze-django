@@ -1,5 +1,6 @@
 # from multiprocessing import context
 from operator import is_not
+from this import d
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -80,9 +81,12 @@ def home(request):
 
     topics = Topic.objects.all()
     room_count = rooms.count()
+    room_messages = Message.objects.all()
+
 
     # create a context dictionary
-    context = {'rooms':rooms,'topics':topics,'room_count':room_count}
+    context = {'rooms':rooms,'topics':topics,'room_count':room_count,
+    'room_messages':room_messages}
     return render(request,'base/home.html',context) 
 
 def room(request,pk):
@@ -126,6 +130,7 @@ def updateRoom(request,pk):
     
     if request.user != room.host:
         return HttpResponse('You are not allowed here!')
+        
 
     if request.method == 'POST':
         form = RoomForm(request.POST, instance=room)

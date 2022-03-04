@@ -4,18 +4,18 @@
 <style>
     .home-container {
         display: grid;
-        grid-template-columns: 1fr 3fr;
+        grid-template-columns: 1fr 3fr 1fr;
     }
 </style>
 
 
 <div class="home-container">
-
+    <!-- first column / 1fr -->
     <div>
         <h3>Browse Topics </h3>
         <hr>
         <div>
-            <a href="{% url 'home' %}">ALL</a>
+            <a href="{% url 'home' %}">VIEW ALL</a>
         </div>
         {% for topic in topics %}
             <div>
@@ -23,11 +23,12 @@
             </div>
         {% endfor %}
     </div>
-
+        <!-- 2nd col / 3fr  -->
         <div>
             <div>
                 <h5>{{room_count}} rooms available</h5>
                 <a href="{% url 'create-room' %}">Create Room</a>
+                <hr>
                 <div>
                     {% for room in rooms %}
                     <div>
@@ -44,7 +45,18 @@
                 </div>
             </div>
         </div>
-
+        <!-- end of col2 -->
+    <!-- 3rd col 1fr  -->
+    <div>
+        <h3>Recent Activity</h3>
+        <hr>
+        {% for message in room_messages %}
+            <div>
+                <small>@{{ message.user }} {{message.created|timesince </small>
+                 
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 {% endblock %}
