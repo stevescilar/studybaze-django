@@ -5,14 +5,14 @@
         <div class="avatar avatar--small">
           <img src="https://randomuser.me/api/portraits/women/11.jpg" />
         </div>
-        <span>@sulamita_ivy</span>
+        <span>@{{ room.host.username }}</span>
       </a>
       <div class="roomListRoom__actions">
-        <span>5 days ago</span>
+        <span>{{room.created|timesince}} ago</span>
       </div>
     </div>
     <div class="roomListRoom__content">
-      <a href="room.html">JavaScript made Simple</a>
+      <a href="{% url 'room' room.id %}">{{room.name}}</a>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur ducimus harum dolorem, obcaecati
         mollitia omnis quasi aut consequuntur enim itaque labore.
